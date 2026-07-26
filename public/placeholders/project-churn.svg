@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#0f172a"/>
-  <polyline points="40,400 140,360 240,380 340,260 440,300 540,160 640,200 760,100" fill="none" stroke="#38bdf8" stroke-width="4"/>
-  <polyline points="40,440 140,430 240,410 340,420 440,380 540,390 640,340 760,350" fill="none" stroke="#f472b6" stroke-width="4"/>
-  <text x="40" y="60" fill="#e2e8f0" font-family="monospace" font-size="24">churn_risk_score.png</text>
-</svg>

@@ -12,10 +12,12 @@ export function ContactSection({ profile, socialLinks }: { profile: Profile; soc
       </p>
       <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
         <Button href={`mailto:${profile.email}`}>{profile.email}</Button>
-        <Button href="/resume.pdf" variant="secondary">
-          <Download className="h-4 w-4" />
-          Download CV
-        </Button>
+        {profile.resumeUrl && (
+          <Button href={profile.resumeUrl} variant="secondary">
+            <Download className="h-4 w-4" />
+            Download CV
+          </Button>
+        )}
       </div>
       <SocialLinks links={socialLinks} className="mt-6 justify-center" />
     </div>

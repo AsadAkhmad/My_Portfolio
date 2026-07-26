@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   getProfile,
   getSocialLinks,
@@ -15,6 +16,25 @@ import { ProjectCard } from "@/components/recruiter/ProjectCard";
 import { SkillsMatrix } from "@/components/recruiter/SkillsMatrix";
 import { CertificationList } from "@/components/recruiter/CertificationList";
 import { ContactSection } from "@/components/recruiter/ContactSection";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getProfile();
+  const fullName = profile?.fullName ?? "Portfolio";
+  const title = `Professional Portfolio — ${fullName}`;
+  const description = profile?.careerGoals ?? profile?.shortBio ?? "Professional portfolio.";
+  const ogImage = `/api/og?${new URLSearchParams({
+    eyebrow: "Professional Portfolio",
+    title: fullName,
+    subtitle: profile?.headline ?? "",
+  }).toString()}`;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description, images: [{ url: ogImage, width: 1200, height: 630, alt: title }] },
+    twitter: { card: "summary_large_image", title, description, images: [ogImage] },
+  };
+}
 
 export default async function PortfolioPage() {
   const [profile, socialLinks, experience, education, projects, skills, certifications] = await Promise.all([

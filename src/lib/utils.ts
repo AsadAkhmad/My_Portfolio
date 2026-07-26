@@ -43,3 +43,7 @@ export function readOptionalDate(formData: FormData, key: string): Date | null {
   const value = readString(formData, key);
   return value.length > 0 ? new Date(value) : null;
 }
+
+export function getSiteUrl(): string {
+  return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+}

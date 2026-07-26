@@ -1,10 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { getProjectBySlug } from "@/lib/db/queries";
 import { Badge } from "@/components/shared/Badge";
 import { GithubIcon } from "@/components/shared/BrandIcons";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug);
+  if (!project) return { title: "Project not found" };
+
+  const title = `${project.name} — Project`;
+  const description = project.summary;
+  const ogImage =
+    project.images[0]?.url ??
+    `/api/og?${new URLSearchParams({ eyebrow: "Project", title: project.name, subtitle: project.summary }).toString()}`;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description, images: [{ url: ogImage, width: 1200, height: 630, alt: project.name }] },
+    twitter: { card: "summary_large_image", title, description, images: [ogImage] },
+  };
+}
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

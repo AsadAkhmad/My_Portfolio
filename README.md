@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Asadullo Mirzaakhmedov — Portfolio
+
+Personal portfolio built with Next.js, TypeScript, Tailwind CSS, and a Postgres/Prisma backend.
+
+The site has three parts:
+
+- **Landing page** (`/`) — introduction, resume download, and two entry points below.
+- **Recruiter View** (`/portfolio`) — a clean, scannable summary of experience, education, projects, skills, and certifications.
+- **Data Science Lab** (`/lab`) — a terminal-style page where visitors can run a constrained set of SQL-like queries against the real portfolio data.
+
+All content (profile, education, experience, projects, skills, certifications) is stored in Postgres and managed through a private admin dashboard at `/admin`, rather than edited in code.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses Prisma against a Postgres database (Supabase in production, local Postgres for dev).
 
-## Learn More
+```bash
+npx prisma migrate dev   # apply schema migrations
+npx prisma studio        # browse/edit data directly
+npx prisma db seed       # reset to the seed.ts snapshot (destructive — wipes existing rows)
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Admin CMS
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Manage all content at `/admin` without touching code. Set up your login with:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run admin:hash-password -- 'your password'
+```
 
-## Deploy on Vercel
+Then add the printed `ADMIN_PASSWORD_HASH` and a `SESSION_SECRET` to `.env` (see `.env.example`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deploy on [Vercel](https://vercel.com/new) with a Supabase Postgres database — see `.env.example` for the required environment variables.

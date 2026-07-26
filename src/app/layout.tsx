@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import { getProfile } from "@/lib/db/queries";
+import { getSiteUrl } from "@/lib/utils";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,9 +22,32 @@ const jetbrainsMono = JetBrains_Mono({
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await getProfile();
   const fullName = profile?.fullName ?? "Portfolio";
+  const title = profile ? `${fullName} — ${profile.headline}` : fullName;
+  const description = profile?.shortBio ?? "Personal portfolio.";
+  const siteUrl = getSiteUrl();
+  const ogImage = `/api/og?${new URLSearchParams({
+    title: fullName,
+    subtitle: profile?.headline ?? "",
+  }).toString()}`;
+
   return {
-    title: profile ? `${fullName} — ${profile.headline}` : fullName,
-    description: profile?.shortBio ?? "Personal portfolio.",
+    metadataBase: new URL(siteUrl),
+    title,
+    description,
+    openGraph: {
+      type: "website",
+      url: siteUrl,
+      siteName: `${fullName} — Portfolio`,
+      title,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 

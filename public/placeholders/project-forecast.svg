@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#111827"/>
-  <path d="M40 300 Q 200 100 400 260 T 760 200" fill="none" stroke="#a78bfa" stroke-width="4"/>
-  <path d="M40 340 Q 200 260 400 320 T 760 280" fill="none" stroke="#34d399" stroke-width="4" stroke-dasharray="8 6"/>
-  <text x="40" y="60" fill="#e5e7eb" font-family="monospace" font-size="24">forecast_vs_actual.png</text>
-</svg>

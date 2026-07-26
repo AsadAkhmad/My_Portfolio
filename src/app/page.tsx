@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Download, Mail } from "lucide-react";
 import { getProfile, getSocialLinks, getProjects } from "@/lib/db/queries";
+import { getSiteUrl } from "@/lib/utils";
 import { Button } from "@/components/shared/Button";
 import { SocialLinks } from "@/components/shared/SocialLinks";
 import { ThemeSwitchCTA } from "@/components/shared/ThemeSwitchCTA";
@@ -15,8 +16,26 @@ export default async function LandingPage() {
 
   if (!profile) return null;
 
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.fullName,
+    jobTitle: profile.headline,
+    description: profile.shortBio,
+    email: profile.email,
+    url: getSiteUrl(),
+    ...(profile.university ? { alumniOf: { "@type": "CollegeOrUniversity", name: profile.university } } : {}),
+    ...(socialLinks.length > 0
+      ? { sameAs: socialLinks.filter((link) => link.platform !== "email").map((link) => link.url) }
+      : {}),
+  };
+
   return (
     <main className="relative flex-1 overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,rgba(139,124,246,0.16),transparent)]"
@@ -38,10 +57,12 @@ export default async function LandingPage() {
         <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">{profile.shortBio}</p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Button href="/resume.pdf" size="lg">
-            <Download className="h-4 w-4" />
-            Download Resume
-          </Button>
+          {profile.resumeUrl && (
+            <Button href={profile.resumeUrl} size="lg">
+              <Download className="h-4 w-4" />
+              Download Resume
+            </Button>
+          )}
           <Button href="/portfolio#contact" variant="secondary" size="lg">
             <Mail className="h-4 w-4" />
             Contact Me

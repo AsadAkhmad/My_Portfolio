@@ -5,7 +5,21 @@ import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await getProfile();
-  return { title: `Data Science Lab — ${profile?.fullName ?? "Portfolio"}` };
+  const fullName = profile?.fullName ?? "Portfolio";
+  const title = `Data Science Lab — ${fullName}`;
+  const description = "Query my real portfolio data through a constrained SQL-subset terminal.";
+  const ogImage = `/api/og?${new URLSearchParams({
+    eyebrow: "Data Science Lab",
+    title: fullName,
+    subtitle: description,
+  }).toString()}`;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description, images: [{ url: ogImage, width: 1200, height: 630, alt: title }] },
+    twitter: { card: "summary_large_image", title, description, images: [ogImage] },
+  };
 }
 
 export default function LabPage() {
