@@ -1,26 +1,122 @@
 @import "tailwindcss";
 
 :root {
+  --background: #08080d;
+  --foreground: #f4f4f6;
+  --card: #101018;
+  --card-foreground: #f4f4f6;
+  --accent: #8b7cf6;
+  --accent-foreground: #ffffff;
+  --accent-secondary: #38d9c9;
+  --muted: #1a1a24;
+  --muted-foreground: #a1a1ae;
+  --border: rgba(244, 244, 246, 0.1);
+  --ring: #8b7cf6;
+}
+
+[data-theme="recruiter"] {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
+  --card: #f8fafc;
+  --card-foreground: #0f172a;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --accent-secondary: #0891b2;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+  --ring: #2563eb;
+}
+
+[data-theme="lab"] {
+  --background: #050709;
+  --foreground: #d6f5e1;
+  --card: #0a0f0d;
+  --card-foreground: #baf7cd;
+  --accent: #34d399;
+  --accent-foreground: #052e1c;
+  --accent-secondary: #22d3ee;
+  --muted: #0d1512;
+  --muted-foreground: #5f8a72;
+  --border: rgba(52, 211, 153, 0.18);
+  --ring: #34d399;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-terminal: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes ambient-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes rain-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rain-fade {
+  animation: rain-fade 0.4s ease-out both;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
 }

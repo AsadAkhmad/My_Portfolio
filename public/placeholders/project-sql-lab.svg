@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#050709"/>
+  <text x="40" y="70" fill="#34d399" font-family="monospace" font-size="22">$ SELECT name, tech FROM projects</text>
+  <text x="40" y="100" fill="#34d399" font-family="monospace" font-size="22">  WHERE featured = true;</text>
+  <text x="40" y="160" fill="#5f8a72" font-family="monospace" font-size="18">name                  | tech</text>
+  <text x="40" y="190" fill="#baf7cd" font-family="monospace" font-size="18">churn-prediction      | Python, XGBoost</text>
+  <text x="40" y="220" fill="#baf7cd" font-family="monospace" font-size="18">transformer-forecast  | PyTorch, W&amp;B</text>
+</svg>
