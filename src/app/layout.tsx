@@ -34,6 +34,9 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(siteUrl),
     title,
     description,
+    verification: {
+      google: "vx2Z0D3kBhSJCIn09nP8ktWlDJ3oAfc4IfauC_6kD2I",
+    },
     openGraph: {
       type: "website",
       url: siteUrl,
