@@ -1,5 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma";
+import { extraProjects } from "./extra-projects";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -302,6 +303,10 @@ async function main() {
       displayOrder: 3,
     },
   });
+
+  for (const project of extraProjects) {
+    await prisma.project.create({ data: project });
+  }
 
   await prisma.projectImage.createMany({
     data: [
